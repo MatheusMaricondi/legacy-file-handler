@@ -1,6 +1,6 @@
 // Data source
 datasource db {
-    provider = "sqlite"
+    provider = "mongodb"
     url      = env("DATABASE_URL")
 }
 
@@ -10,26 +10,36 @@ generator client {
 }
 
 // Data model
+
+model OrderProduct {
+    id Int @id @map("_id")
+    order_id     Int
+    product_id   Int
+    order       Order     @relation(fields: [order_id], references: [id])
+    product     Product   @relation(fields: [product_id], references: [id])
+}
 model Product {
-    id Int @id @default(autoincrement())
+    id Int @id @map("_id")
     value      String
-    order Order []
+    order OrderProduct[]
     
     @@map("product")
 }
 
 model Order {
-    id Int @id @default(autoincrement())
+    id Int @id @map("_id")
     total    String @unique
     date     String
-    user User[]
-    product Product[]
+    product OrderProduct[]
+
+    user_id Int
+    author   User   @relation(fields: [user_id], references: [id])
 
     @@map("order")
 }
 
 model User {
-    id Int @id @default(autoincrement())
+    id Int @id @map("_id")
     name    String @unique
     order Order[]
     @@map("user")

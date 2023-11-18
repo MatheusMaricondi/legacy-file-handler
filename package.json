@@ -5,8 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsnd --respawn --transpile-only src/index.ts",
-    "dev2": "concurrently \"nodemon dist/index.js\" \"npx tsc -w\"",
     "start": "node dist/index.js",
+    "migrations": "npx prisma migrate dev",
     "build": "npx tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

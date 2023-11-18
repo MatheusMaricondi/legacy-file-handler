@@ -1,40 +1,42 @@
-import IFile from '../types/file'
-import fs from 'fs'
 const readline = require('readline');
+import fs from 'fs'
 import IClient from '../types/client';
 import { join } from 'node:path'
 
-
-const readClientFile = (file: IFile) => {
+const readUploadedData = async () => {
     try {
         const path = join(__dirname, '../', '../', 'temp-uploads/data.txt');
-        fs.readFile(path, 'utf8', function(err: any, data: any) {
-            if(err) throw `error when open file, ${err}`
-            convertFileToJson(path)
-        })
+        return await convertFileToJson(path)
     } catch (err) {
     } 
 }
 
-const convertFileToJson = (path: any): any => {
-    const stream = fs.createReadStream(path);
-    stream.on('error', (err) => {
-        return err
-    });
-    const reader = readline.createInterface({
-        input: stream
-    });
+const convertFileToJson = (path: string) => {
+    try {
+        return new Promise((resolve, reject) => {
+            let clientList: IClient[] = []
+    
+            const stream = fs.createReadStream(path);
+            stream.on('error', (err) => {
+               reject(err)
+            });
+            const reader = readline.createInterface({
+                input: stream
+            });
+        
+            reader.on('line', (line: String) => {
+                const eachClient = lineToJson(line)
+                mountClientObject(clientList, eachClient)
+            });
+        
+            reader.on('close', () => {
+                resolve(clientList) 
+            });
+        })
+    }catch(err) {
 
-    let clientList: IClient[] = []
-
-    reader.on('line', (line: String) => {
-        const eachClient = lineToJson(line)
-        mountClientObject(clientList, eachClient)
-    });
-
-    reader.on('close', () => { 
-        return clientList 
-    });
+    }
+  
 }
 
 const lineToJson = (line: String): IClient => {
@@ -88,4 +90,4 @@ const mountClientObject = (clientList: IClient[], eachClient: IClient) => {
     }
 }
 
-module.exports = readClientFile
+module.exports = readUploadedData

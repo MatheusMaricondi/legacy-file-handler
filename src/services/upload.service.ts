@@ -1,11 +1,14 @@
-import IFile from "../types/file"
-const readClientFile = require('../helpers/file')
+const readUploadedData = require('../helpers/file')
+import IClient from "../types/client"
+import User from "../repositories/user.repositorie"
 
 class UploadService {
 
-    onCreate = (file: IFile) => {
-        const openedFile = readClientFile(file)
-        return openedFile
+    onCreate = async () => {
+        const jsonFile: IClient[] = await readUploadedData()
+        const userInstance = new User()
+        userInstance.createUser(jsonFile)
+
     }
 }
 

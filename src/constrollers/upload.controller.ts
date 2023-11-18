@@ -1,10 +1,9 @@
-import IFile from "../types/file"
 import UploadService from "../services/upload.service"
 
 class UploadController {
-   onCreate = (file: IFile) => {
+   onCreate = async () => {
          const uploadServiceInstance = new UploadService()
-         const uploadResponse = uploadServiceInstance.onCreate(file)
+         const uploadResponse = await uploadServiceInstance.onCreate()
          return uploadResponse
    }
 }
