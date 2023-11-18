@@ -10,3 +10,12 @@ To init this project follow the comands below:
 `` npm i ``
 
 `` npm run dev ``
+
+
+## Prisma 
+### create migrations:
+
+`` npx prisma migrate dev ``
+
+### start prisma server:
+`` npx prisma studio ``

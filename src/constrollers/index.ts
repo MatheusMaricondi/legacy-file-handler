@@ -1,5 +1,5 @@
-import OrdersController from './order.controller'
+import UploadController from './upload.controller'
 
 export {
-    OrdersController
+    UploadController
 }
