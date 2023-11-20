@@ -6,9 +6,8 @@ const app = express()
 
 app.get('/upload', upload.single('file'), async (req: any, res: Response) => {
     try {
-        console.log(req.file)
         const uploadControllerInstance = new UploadController()
-        await uploadControllerInstance.onCreate()
+        await uploadControllerInstance.onCreate(req.file)
         res.status(201).json({message: 'clients file was sucessfully uploaded', file: req.file})
     }catch(err) {
         res.status(500).json({error: `Upload failed error ${err}`})

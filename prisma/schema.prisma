@@ -7,39 +7,41 @@ datasource db {
 // Generator
 generator client {
     provider = "prisma-client-js"
+    previewFeatures = ["mongodb"]
 }
 
 // Data model
 
 model OrderProduct {
-    id Int @id @map("_id")
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    value        String
     order_id     Int
     product_id   Int
     order       Order     @relation(fields: [order_id], references: [id])
     product     Product   @relation(fields: [product_id], references: [id])
+
+    @@map("order_product")
 }
 model Product {
-    id Int @id @map("_id")
-    value      String
-    order OrderProduct[]
+    id Int @id @map("_id")   
+    orders OrderProduct[]
     
     @@map("product")
 }
 
 model Order {
-    id Int @id @map("_id")
-    total    String @unique
+    id Int @id @map("_id")    
     date     String
-    product OrderProduct[]
-
-    user_id Int
-    author   User   @relation(fields: [user_id], references: [id])
+    total    String
+    user_id     Int
+    products OrderProduct[]
+    user   User   @relation(fields: [user_id], references: [id])
 
     @@map("order")
 }
 
 model User {
-    id Int @id @map("_id")
+    id Int @id @map("_id")    
     name    String @unique
     order Order[]
     @@map("user")
