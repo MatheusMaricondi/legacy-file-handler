@@ -7,6 +7,7 @@
     "dev": "tsnd --respawn --transpile-only src/index.ts",
     "start": "node dist/index.js",
     "migrations": "npx prisma migrate dev",
+    "push": "npx prisma db push",
     "build": "npx tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

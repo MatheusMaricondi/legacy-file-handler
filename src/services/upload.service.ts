@@ -1,15 +1,17 @@
 const readUploadedData = require('../helpers/file')
 import { IDiffAllList } from "../types/client"
 import IFile from "../types/file"
-import User from "../repositories/user.repository"
+const insertRepository = require("../repositories/insert.repository")
 
 class UploadService {
 
     onCreate = async (file: IFile) => {
-        const jsonFile: IDiffAllList = await readUploadedData(file)
-        const userRepositoryInstance = new User()
-        await userRepositoryInstance.createUser(jsonFile)
-        return jsonFile
+        try {
+            const jsonFile: IDiffAllList = await readUploadedData(file)
+            await insertRepository(jsonFile)
+        }catch(err) {
+            throw err
+        }
     }
 }
 

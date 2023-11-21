@@ -3,9 +3,12 @@ import IFile from "../types/file"
 
 class UploadController {
    onCreate = async (file: IFile) => {
-         const uploadServiceInstance = new UploadService()
-         const uploadResponse = await uploadServiceInstance.onCreate(file)
-         return uploadResponse
+      try {
+            const uploadServiceInstance = new UploadService()
+            uploadServiceInstance.onCreate(file)
+      }catch(err) {
+            throw err
+      }
    }
 }
 

@@ -7,7 +7,7 @@ datasource db {
 // Generator
 generator client {
     provider = "prisma-client-js"
-    previewFeatures = ["mongodb"]
+    previewFeatures = ["fullTextSearch"]
 }
 
 // Data model
@@ -15,8 +15,8 @@ generator client {
 model OrderProduct {
     id String @id @default(auto()) @map("_id") @db.ObjectId
     value        String
-    order_id     Int
-    product_id   Int
+    order_id     Int 
+    product_id   Int 
     order       Order     @relation(fields: [order_id], references: [id])
     product     Product   @relation(fields: [product_id], references: [id])
 
@@ -31,7 +31,7 @@ model Product {
 
 model Order {
     id Int @id @map("_id")    
-    date     String
+    date     DateTime
     total    String
     user_id     Int
     products OrderProduct[]
@@ -44,5 +44,6 @@ model User {
     id Int @id @map("_id")    
     name    String @unique
     order Order[]
+
     @@map("user")
 }

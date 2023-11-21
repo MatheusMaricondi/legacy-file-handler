@@ -17,7 +17,7 @@ type IUserList = {
 }
 type IOrderList = {
     id: number
-    date: string
+    date: Date
     total: string
     user_id: number
 }
