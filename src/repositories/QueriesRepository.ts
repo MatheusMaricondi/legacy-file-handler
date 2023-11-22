@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import prisma from "../services/prisma.service";
+import prisma from "../services/PrismaService";
 import { IFilterDate } from "../types/filters";
 
 class QueriesRepository {

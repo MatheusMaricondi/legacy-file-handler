@@ -1,4 +1,4 @@
-import QueriesService from "../services/queries.service"
+import QueriesService from "../services/QueriesService"
 import { IFilterDate } from "../types/filters"
 
 class QueriesController {

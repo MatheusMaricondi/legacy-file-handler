@@ -53,7 +53,9 @@ export {
     IOrderList,
     IProductList,
     IOrderProductList,
-    IUpdate
+    IUpdate,
+    IUpdateOrder,
+    IUpdateOrderProduct
 }
 
 

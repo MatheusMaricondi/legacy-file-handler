@@ -1,5 +1,5 @@
-import UploadController from './upload.controller'
-import QueriesController from './queries.controller'
+import UploadController from './UploadController'
+import QueriesController from './QueriesController'
 
 export {
     UploadController,

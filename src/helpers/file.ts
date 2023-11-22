@@ -1,7 +1,7 @@
 const readline = require('readline');
 import fs from 'fs'
 import { IAllList, IDiffAllList, IOrderList, IOrderProductList, IProductList, IUserList } from '../types/client';
-import { updateCacheUser, getCacheUser } from '../services/update-cache.service'
+import { updateCacheUser, getCacheUser } from '../services/UpdateCacheService'
 import { join } from 'node:path'
 import IFile from '../types/file';
 

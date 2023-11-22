@@ -1,4 +1,4 @@
-import QueriesRepository from "../repositories/queries.repository"
+import QueriesRepository from "../repositories/QueriesRepository"
 import { IFilterDate } from "../types/filters"
 
 class QueriesService {
