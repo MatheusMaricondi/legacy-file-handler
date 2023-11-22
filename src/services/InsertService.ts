@@ -6,12 +6,12 @@ class InsertService {
     constructor(private insertRepository: IDataRepository) {}
 
     async execute(data: IDiffAllList) {
-        this.insertRepository.createUser(data.userList)
-        this.insertRepository.createOrder(data.orderList)
-        this.insertRepository.createProduct(data.productList)
-        this.insertRepository.createOrderProduct(data.orderProductList)
-        this.insertRepository.updateOrder(data.updateList.updateOrder)
-        this.insertRepository.updateOrderProduct(data.updateList.updateOrderProduct)
+        await this.insertRepository.createUser(data.userList)
+        await this.insertRepository.createOrder(data.orderList)
+        await this.insertRepository.createProduct(data.productList)
+        await this.insertRepository.createOrderProduct(data.orderProductList)
+        await this.insertRepository.updateOrder(data.updateList.updateOrder)
+        await this.insertRepository.updateOrderProduct(data.updateList.updateOrderProduct)
     }
 }
 
