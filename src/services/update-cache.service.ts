@@ -9,9 +9,12 @@ const updateCacheUser = async (data: any)  => {
 
 const getCacheUser = async () => {
     const uri = path.join(__dirname,'../','../','/data-cache/','dataCache.json')
+    const directory = path.join(__dirname,'../','../','/data-cache/')
+
     const fileExist = fs.existsSync(uri)
-    const jsonCacheDocument = JSON.stringify(initialCacheDocument)
     if(!fileExist) {
+        const jsonCacheDocument = JSON.stringify(initialCacheDocument)
+        fs.mkdirSync(directory)
         await fs.writeFileSync(uri, jsonCacheDocument);
     }
     let bufferFile = await fs.readFileSync(uri)

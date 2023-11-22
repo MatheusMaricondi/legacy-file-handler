@@ -43,7 +43,7 @@ import { IDiffAllList } from "../types/client";
                     const orderProductData = await prisma.orderProduct.findFirst({
                         where: {AND: [{order_id: orderProd.order_id},{product_id: orderProd.product_id}]}
                     })
-                    const resp = await prisma.orderProduct.update({
+                    await prisma.orderProduct.update({
                         data: {
                             value: orderProd.value
                         },
@@ -51,7 +51,8 @@ import { IDiffAllList } from "../types/client";
                     })
                 }
             }
-            console.log('✔️ Insertions database finished')
+
+        console.log('✔️ Insertions database finished')
         }catch(err) {
             throw err
         }
