@@ -1,0 +1,19 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Purchase Orders API",
+        "summary": "The upload legacy application and queries.",
+        "description": "This is an api that consumes legacy files to database and provides endpoits to consulting them.",
+        "termsOfService": "https://example.com/terms/",
+        "contact": {
+          "name": "API Support",
+          "url": "https://github.com/MatheusMaricondi/legacy-file-handler",
+          "email": "matheus.maricondi@gmail.com"
+        },
+        "license": {
+          "name": "Apache 2.0",
+          "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.1"
+      }
+}

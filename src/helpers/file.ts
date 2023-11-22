@@ -2,34 +2,44 @@ const readline = require('readline');
 import fs from 'fs'
 import { IAllList, IDiffAllList, IOrderList, IOrderProductList, IProductList, IUserList } from '../types/client';
 import { updateCacheUser, getCacheUser } from '../services/update-cache.service'
+import userJsonCache from '../../user-cache/userList.json'
+
 import { join } from 'node:path'
 import IFile from '../types/file';
 
 const readUploadedData = async (file: IFile) => {
     try {
         const path = join(__dirname, '../', '../', file.path);
-        const response = await convertFileToJson(path)
+        let userTotalList = await getCacheUser()
+        const response = await convertFileToJson(path, userTotalList)
         return response
     } catch (err) {
         throw err
     } 
 }
 
-const convertFileToJson = (path: string) => {
-        return new Promise((resolve, reject) => {
-            try {
-
-                const userTotalList: IAllList = getCacheUser()
-                const userDiffList: IDiffAllList = {
-                    orderList: [],
-                    orderProductList: [],
-                    productList: [],
-                    userList: [],
-                    updateList: {
-                        updateOrderProduct: [],
-                        updateOrder: []
-                    }
+const convertFileToJson = async (path: string, userTotalList: any ) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const userDiffList: IDiffAllList = {
+                orderList: [],
+                orderProductList: [],
+                productList: [],
+                userList: [],
+                updateList: {
+                    updateOrderProduct: [],
+                    updateOrder: []
                 }
+            }
+            // let userTotalList: any = {
+            //     "orderList": [ ],
+            //     "orderProductList": [],
+            //     "productList": [],
+            //     "userList": []
+            // }
+
+                
+
                 const stream = fs.createReadStream(path);
                 stream.on('error', (err) => {
                    reject(err)

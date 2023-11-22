@@ -4,13 +4,12 @@ import { IDiffAllList } from "../types/client";
     const insertRepository = async (data: IDiffAllList) => {
         try {
             const { userList,orderList,productList,orderProductList,updateList } = data
-            let ordersResponse = null
-            let productResponse = null
-            
+            let response
             if(userList.length > 0) {
-                await prisma.user.createMany({
+                response = await prisma.user.createMany({
                     data: userList
                 })
+
             }
             if(orderList.length > 0) {
                 await prisma.order.createMany({
@@ -52,7 +51,7 @@ import { IDiffAllList } from "../types/client";
                     })
                 }
             }
-            console.log('Insertions database finished')
+            console.log('✔️ Insertions database finished')
         }catch(err) {
             throw err
         }
