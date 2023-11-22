@@ -1,4 +1,4 @@
 node_modules
 dist
 temp-uploads/*
-dataCache.json
+data-cache/*
