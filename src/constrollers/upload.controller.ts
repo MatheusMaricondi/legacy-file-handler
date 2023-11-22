@@ -7,7 +7,7 @@ class UploadController {
             const uploadServiceInstance = new UploadService()
             uploadServiceInstance.onCreate(file)
       }catch(err) {
-            throw err
+            throw {status: 500, error: {error: err}}
       }
    }
 }

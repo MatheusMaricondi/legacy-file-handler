@@ -2,23 +2,21 @@ const readline = require('readline');
 import fs from 'fs'
 import { IAllList, IDiffAllList, IOrderList, IOrderProductList, IProductList, IUserList } from '../types/client';
 import { updateCacheUser, getCacheUser } from '../services/update-cache.service'
-import userJsonCache from '../../user-cache/userList.json'
-
 import { join } from 'node:path'
 import IFile from '../types/file';
 
 const readUploadedData = async (file: IFile) => {
     try {
         const path = join(__dirname, '../', '../', file.path);
-        let userTotalList = await getCacheUser()
-        const response = await convertFileToJson(path, userTotalList)
+        let dataCache = await getCacheUser()
+        const response = await convertFileToJson(path, dataCache)
         return response
     } catch (err) {
         throw err
     } 
 }
 
-const convertFileToJson = async (path: string, userTotalList: any ) => {
+const convertFileToJson = async (path: string, dataCache: any ) => {
     return new Promise((resolve, reject) => {
         try {
             const userDiffList: IDiffAllList = {
@@ -31,15 +29,6 @@ const convertFileToJson = async (path: string, userTotalList: any ) => {
                     updateOrder: []
                 }
             }
-            // let userTotalList: any = {
-            //     "orderList": [ ],
-            //     "orderProductList": [],
-            //     "productList": [],
-            //     "userList": []
-            // }
-
-                
-
                 const stream = fs.createReadStream(path);
                 stream.on('error', (err) => {
                    reject(err)
@@ -49,11 +38,11 @@ const convertFileToJson = async (path: string, userTotalList: any ) => {
                 });
             
                 reader.on('line', async (user: String) => {
-                    lineToJson(user, userTotalList, userDiffList)
+                    lineToJson(user, dataCache, userDiffList)
                 });
                 
                 reader.on('close', async () => {
-                    await updateCacheUser(userTotalList)
+                    await updateCacheUser(dataCache)
                     resolve(userDiffList) 
                 });
             }catch(err) {
@@ -64,7 +53,7 @@ const convertFileToJson = async (path: string, userTotalList: any ) => {
   
 }
 
-const lineToJson = (line: String, allUserCache: IAllList, userDiffList: IDiffAllList) => {
+const lineToJson = (line: String, dataCache: IAllList, userDiffList: IDiffAllList) => {
     const user_id = parseInt(line.substring(0, 10)) 
     const name = line.substring(10, 55).trim() 
     const order_id = parseInt(line.substring(55, 65))
@@ -73,13 +62,13 @@ const lineToJson = (line: String, allUserCache: IAllList, userDiffList: IDiffAll
     const unFormattedDate = line.substring(87, 95)
     const date = new Date(`${unFormattedDate.substring(0, 4)}-${unFormattedDate.substring(4, 6)}-${unFormattedDate.substring(6, 8)}`)
     
-    const userExist = allUserCache.userList.some((user: IUserList) => user.id == user_id);
-    const orderExist = allUserCache.orderList.find((order: IOrderList) => order.id == order_id);
-    const productExist = allUserCache.productList.some((product: IProductList) => product.id == product_id);
-    const orderProductExist = allUserCache.orderProductList.find((ordProd: IOrderProductList) => (ordProd.order_id == order_id && ordProd.product_id == product_id));
+    const userExist = dataCache.userList.some((user: IUserList) => user.id == user_id);
+    const orderExist = dataCache.orderList.find((order: IOrderList) => order.id == order_id);
+    const productExist = dataCache.productList.some((product: IProductList) => product.id == product_id);
+    const orderProductExist = dataCache.orderProductList.find((ordProd: IOrderProductList) => (ordProd.order_id == order_id && ordProd.product_id == product_id));
 
     if (!orderProductExist) { 
-        allUserCache.orderProductList.push({order_id, product_id, value: value})
+        dataCache.orderProductList.push({order_id, product_id, value: value})
         userDiffList.orderProductList.push({order_id, product_id, value: value})
     }else {
         const newValue = (parseFloat(orderProductExist.value) + parseFloat(value)).toFixed(2)
@@ -89,11 +78,11 @@ const lineToJson = (line: String, allUserCache: IAllList, userDiffList: IDiffAll
         else userDiffList.updateList.updateOrderProduct.push({order_id: orderProductExist.order_id, product_id: orderProductExist.product_id, value: newValue})
     }
     if (!userExist) {
-        allUserCache.userList.push({id: user_id, name})
+        dataCache.userList.push({id: user_id, name})
         userDiffList.userList.push({id: user_id, name})
     }
     if (!orderExist) {
-        allUserCache.orderList.push({id: order_id, date, user_id, total: value})
+        dataCache.orderList.push({id: order_id, date, user_id, total: value})
         userDiffList.orderList.push({id: order_id, date, user_id, total: value})
     }else {
         const newTotal = (parseFloat(orderExist.total) + parseFloat(value)).toFixed(2)
@@ -104,7 +93,7 @@ const lineToJson = (line: String, allUserCache: IAllList, userDiffList: IDiffAll
         
     }
     if (!productExist) {
-        allUserCache.productList.push({id: product_id})
+        dataCache.productList.push({id: product_id})
         userDiffList.productList.push({id: product_id})
     }
 

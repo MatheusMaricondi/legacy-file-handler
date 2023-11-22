@@ -5,7 +5,7 @@ const storage = multer.diskStorage({
       cb(null, 'temp-uploads/');
     },
     filename: (req, file, cb) => {
-      cb(null, file.originalname);
+      cb(null, 'data.txt');
     },
   });
   const upload = multer({ storage: storage });
