@@ -4,8 +4,9 @@
 This api receives legacy files, uploads them, processes them and returns them in json.
 
 ## .ENV
+### override the <> content to your credentials mongodb
 `` APP_PORT=3000 ``
-`` DATABASE_URL=mongodb+srv://<username>:<password>@orders.2okm3dv.mongodb.net/?retryWrites=true&w=majority ``
+`` DATABASE_URL=mongodb+srv://<username>:<password>@orders.2okm3dv.mongodb.net/<database>?retryWrites=true&w=majority ``
 
 
 ## setup

@@ -1,8 +1,17 @@
 import prisma from "../services/PrismaService";
 import IDataRepository from "./IDataRepository";
-import { IOrderList, IOrderProductList, IProductList, IUpdateOrder, IUpdateOrderProduct, IUserList } from "../types/client";
+import { IDiffAllList, IOrderList, IOrderProductList, IProductList, IUpdateOrder, IUpdateOrderProduct, IUserList } from "../types/client";
 
 class InsertRepository implements IDataRepository { 
+
+    async insertData(data: IDiffAllList): Promise<any> {
+        await this.createUser(data.userList)
+        await this.createOrder(data.orderList)
+        await this.createProduct(data.productList)
+        await this.createOrderProduct(data.orderProductList)
+        await this.updateOrder(data.updateList.updateOrder)
+        await this.updateOrderProduct(data.updateList.updateOrderProduct)
+    }
     async createUser(user: IUserList[]): Promise<any> {
         if(user.length > 0) {
             await prisma.user.createMany({
