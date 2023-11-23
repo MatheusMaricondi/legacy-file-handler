@@ -13,8 +13,8 @@ app.post('/upload', upload.single('file'), async (req: any, res: Response) => {
         const file: any = req.file
         console.log(file)
         if(file.mimetype != 'text/plain') throw {status: 400, error: {message: `Invalid ${file.originalname} file type ${file.mimetype}, expected 'text/plain' type`}}
-        const uploadedFile = await uploadControllerInstance.onCreate(req.file)
-        await insertControllerInstance.handler(uploadedFile)
+        const dataToSave = await uploadControllerInstance.onCreate(req.file)
+        await insertControllerInstance.handler(dataToSave)
         
         res.status(201).json({message: 'clients file was sucessfully uploaded', file: req.file})
     }catch(err: any) {

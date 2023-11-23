@@ -2,12 +2,12 @@ const fs = require('fs')
 const path = require('node:path'); 
 import initialCacheDocument from "../constants"; '../constants/index'
 
-const updateCacheUser = async (data: any)  => {
+const updateDataCache = async (data: any)  => {
     const uri = path.join(__dirname,'../','../','/data-cache/','dataCache.json')
     await fs.writeFileSync(uri, JSON.stringify(data))
 }
 
-const getCacheUser = async () => {
+const getDataCache = async () => {
     const uri = path.join(__dirname,'../','../','/data-cache/','dataCache.json')
     const directory = path.join(__dirname,'../','../','/data-cache/')
 
@@ -25,6 +25,6 @@ const getCacheUser = async () => {
 
 
 export { 
-    updateCacheUser,
-    getCacheUser
+    updateDataCache,
+    getDataCache
 }

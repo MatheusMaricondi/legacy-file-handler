@@ -5,8 +5,8 @@ import { IDiffAllList } from "../types/client";
 class InsertController {
     constructor(private createData: InsertService) {}
 
-    async handler(file: IDiffAllList) {
-        this.createData.execute(file)
+    async handler(data: IDiffAllList) {
+        this.createData.execute(data)
     }
 }
 
