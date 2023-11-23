@@ -5,7 +5,7 @@ import { createInsertFactory } from '../modules/CreateDataFactory'
 const upload = require('../helpers/upload')
 const app = express()
 
-app.get('/upload', upload.single('file'), async (req: any, res: Response) => {
+app.post('/upload', upload.single('file'), async (req: any, res: Response) => {
     try {
         const uploadControllerInstance = new UploadController()
         const insertControllerInstance = createInsertFactory()
