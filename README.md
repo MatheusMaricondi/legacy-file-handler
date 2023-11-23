@@ -25,6 +25,10 @@ To init this project follow the comands below:
 `` npm i ``
 `` npm run dev ``
 
+### test
+
+`` npm run test ``
+
 ### production
 `` npm run build ``
 
