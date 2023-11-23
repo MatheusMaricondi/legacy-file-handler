@@ -1,7 +1,10 @@
 # legacy-file-handler
 
 ## description
-This api receives legacy files, uploads them, processes them and returns them in json.
+This api receives legacy files using multer library, uploads them and processes them using a factory class that allows differents databases drives, repository pattern, read and handler legacy file using native node file system stream, the system keeps a non duplicated copy legacy file to get the differences and persist in database via prisma ORM and mongodb.
+
+### stacks
+nodejs, typescript, prismaORM, mongodb, jest, swagger
 
 ## .ENV
 ### override the <> content to your credentials mongodb
@@ -32,6 +35,8 @@ change the DATABASE_URL
 
 # SWAGGER APIS
 `` localhost:3000/api-docs ``
+
+
 
 
 
